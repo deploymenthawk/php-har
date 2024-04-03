@@ -1,0 +1,16 @@
+{
+  "name": "deploymenthawk/php-har",
+  "description": "A class for working with HTTP archive files.",
+  "keywords": [
+    "har"
+  ],
+  "license": "MIT",
+  "autoload": {
+    "psr-4": {
+      "DeploymentHawk\\": "src/"
+    }
+  },
+  "require": {
+    "php": "^8.1"
+  }
+}
