@@ -9,7 +9,7 @@ class Har
 {
     protected array $har;
 
-    protected Collection $entries;
+    protected Collection $requests;
 
     /**
      * @throws JsonException
@@ -23,20 +23,34 @@ class Har
         $this->har = $har;
     }
 
-    public function entries(): Collection
+    public function requests(): Collection
     {
-        if (empty($this->entries)) {
-            $this->entries = (new Collection($this->har['log']['entries']))->map(function ($entry) {
-                return new Entry($entry);
+        if (empty($this->requests)) {
+            $this->requests = (new Collection($this->har['log']['entries']))->map(function ($entry) {
+                return new Request($entry);
             });
         }
 
-        return $this->entries;
+        return $this->requests;
     }
 
     public function totalRequests(): int
     {
-        return $this->entries()->count();
+        return $this->requests()->count();
+    }
+
+    public function slowestRequest(): Request
+    {
+        return $this->requests()->sortBy(function (Request $request) {
+            return $request->totalTime();
+        })->last();
+    }
+
+    public function fastestRequest(): Request
+    {
+        return $this->requests()->sortBy(function (Request $request) {
+            return $request->totalTime();
+        })->first();
     }
 
     public function onContentLoadTiming(int $precision = 2): ?float
