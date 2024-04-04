@@ -3,7 +3,7 @@
 use DeploymentHawk\Request;
 
 beforeEach(function () {
-    $har = json_decode(file_get_contents(__DIR__ . '/../github.com.har'), true);
+    $har = json_decode(file_get_contents(__DIR__.'/../github.com.har'), true);
 
     $this->request = new Request($har['log']['entries'][0]);
 });

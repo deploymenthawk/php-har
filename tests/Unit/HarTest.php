@@ -5,7 +5,7 @@ use DeploymentHawk\Request;
 
 beforeEach(function () {
     $this->har = new Har(
-        file_get_contents(__DIR__ . '/../github.com.har')
+        file_get_contents(__DIR__.'/../github.com.har')
     );
 });
 
