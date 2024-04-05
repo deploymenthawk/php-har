@@ -31,6 +31,19 @@ class Request
         return $this->request['response']['content']['size'];
     }
 
+    public function timings(int $precision = 2): array
+    {
+        return [
+            'blocked' => $this->blockedTiming($precision),
+            'dns' => $this->dnsTiming($precision),
+            'ssl' => $this->sslTiming($precision),
+            'connect' => $this->connectTiming($precision),
+            'send' => $this->sendTiming($precision),
+            'wait' => $this->waitTiming($precision),
+            'receive' => $this->sendTiming($precision),
+        ];
+    }
+
     public function blockedTiming(int $precision = 2): ?float
     {
         return $this->request['timings']['blocked'] === -1

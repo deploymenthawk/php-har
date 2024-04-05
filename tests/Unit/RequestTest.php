@@ -26,6 +26,18 @@ test('request uncompressed size', function () {
     expect($this->request->uncompressedSize())->toEqual(223478);
 });
 
+test('request timings', function () {
+    expect($this->request->timings())->toEqual([
+        'blocked' => 140.56,
+        'dns' => 0.01,
+        'ssl' => 28.38,
+        'connect' => 52.07,
+        'send' => 0.25,
+        'wait' => 26.75,
+        'receive' => 0.25,
+    ]);
+});
+
 test('request blocked timing', function () {
     expect($this->request->blockedTiming())->toEqual(140.56)
         ->and($this->request->blockedTiming(0))->toEqual(141)
