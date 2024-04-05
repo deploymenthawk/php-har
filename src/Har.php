@@ -42,14 +42,42 @@ class Har
     public function slowestRequest(): Request
     {
         return $this->requests()->sortBy(function (Request $request) {
-            return $request->totalTime();
+            return $request->time();
         })->last();
     }
 
     public function fastestRequest(): Request
     {
         return $this->requests()->sortBy(function (Request $request) {
-            return $request->totalTime();
+            return $request->time();
+        })->first();
+    }
+
+    public function largestRequest(): Request
+    {
+        return $this->requests()->sortBy(function (Request $request) {
+            return $request->size();
+        })->last();
+    }
+
+    public function smallestRequest(): Request
+    {
+        return $this->requests()->sortBy(function (Request $request) {
+            return $request->size();
+        })->first();
+    }
+
+    public function largestUncompressedRequest(): Request
+    {
+        return $this->requests()->sortBy(function (Request $request) {
+            return $request->uncompressedSize();
+        })->last();
+    }
+
+    public function smallestUncompressedRequest(): Request
+    {
+        return $this->requests()->sortBy(function (Request $request) {
+            return $request->uncompressedSize();
         })->first();
     }
 

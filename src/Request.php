@@ -16,9 +16,19 @@ class Request
         return $this->request['request']['url'];
     }
 
-    public function totalTime(int $precision = 2): float
+    public function time(int $precision = 2): float
     {
         return round($this->request['time'], $precision);
+    }
+
+    public function size(): int
+    {
+        return $this->request['response']['_transferSize'];
+    }
+
+    public function uncompressedSize(): int
+    {
+        return $this->request['response']['content']['size'];
     }
 
     public function blockedTiming(int $precision = 2): ?float
