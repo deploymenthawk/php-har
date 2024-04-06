@@ -49,6 +49,14 @@ test('smallest uncompressed request', function () {
         ->and($this->har->smallestUncompressedRequest()->uncompressedSize())->toEqual(0);
 });
 
+test('total size', function () {
+    expect($this->har->totalSize())->toEqual(1600544);
+});
+
+test('total uncompressed size', function () {
+    expect($this->har->totalUncompressedSize())->toEqual(4896355);
+});
+
 test('get onContentLoad timing', function () {
     expect($this->har->onContentLoadTiming())->toEqual(580.40)
         ->and($this->har->onContentLoadTiming(0))->toEqual(580)

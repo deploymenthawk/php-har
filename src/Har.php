@@ -81,6 +81,20 @@ class Har
         })->first();
     }
 
+    public function totalSize(): int
+    {
+        return $this->requests()->sum(function (Request $request) {
+            return $request->size();
+        });
+    }
+
+    public function totalUncompressedSize(): int
+    {
+        return $this->requests()->sum(function (Request $request) {
+            return $request->uncompressedSize();
+        });
+    }
+
     public function onContentLoadTiming(int $precision = 2): ?float
     {
         return empty($this->har['log']['pages'][0]['pageTimings']['onContentLoad'])
