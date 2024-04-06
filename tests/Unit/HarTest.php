@@ -13,6 +13,22 @@ test('total requests', function () {
     expect($this->har->totalRequests())->toEqual(99);
 });
 
+test('total requests by type', function () {
+    expect($this->har->totalRequestsByType('script'))->toEqual(66)
+        ->and($this->har->totalRequestsByType())->toBeArray()->toMatchArray([
+            'document' => 1,
+            'stylesheet' => 10,
+            'script' => 66,
+            'font' => 1,
+            'image' => 12,
+            'fetch' => 2,
+            'xhr' => 1,
+            'ping' => 4,
+            'other' => 2,
+        ]);
+
+});
+
 test('slowest request', function () {
     expect($this->har->slowestRequest())->toBeInstanceOf(Request::class)
         ->and($this->har->slowestRequest()->url())->toEqual('https://api.github.com/_private/browser/stats')

@@ -37,6 +37,20 @@ class Har
         return $this->requests()->count();
     }
 
+    public function totalRequestsByType(?string $type = null): array|int
+    {
+        if (is_null($type)) {
+            return $this->requests()
+                ->groupBy(fn ($request) => $request->type())
+                ->map(fn ($group) => $group->count())
+                ->toArray();
+        }
+
+        return $this->requests()
+            ->filter(fn ($request) => $request->type() === $type)
+            ->count();
+    }
+
     public function slowestRequest(): Request
     {
         return $this->requests()->sortBy(function (Request $request) {
