@@ -1,10 +1,19 @@
 {
   "name": "deploymenthawk/php-har",
-  "description": "A class for working with HTTP archive files.",
+  "description": "A lightweight package for working with HAR files.",
   "keywords": [
     "har"
   ],
+  "homepage": "https://github.com/deploymenthawk/php-har",
   "license": "MIT",
+  "authors": [
+    {
+      "name": "Ashley Rich",
+      "email": "hello@ashleyrich.com",
+      "homepage": "https://ashleyrich.com",
+      "role": "Developer"
+    }
+  ],
   "autoload": {
     "psr-4": {
       "DeploymentHawk\\": "src/"
@@ -22,5 +31,8 @@
     "allow-plugins": {
       "pestphp/pest-plugin": true
     }
+  },
+  "scripts": {
+    "test": "vendor/bin/pest"
   }
 }
