@@ -12,6 +12,14 @@ test('request url', function () {
     expect($this->request->url())->toEqual('https://github.com/');
 });
 
+test('request method', function () {
+    expect($this->request->method())->toEqual('GET');
+});
+
+test('request status', function () {
+    expect($this->request->status())->toEqual(200);
+});
+
 test('request time', function () {
     expect($this->request->time())->toEqual(266.54)
         ->and($this->request->time(0))->toEqual(267)

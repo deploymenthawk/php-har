@@ -16,6 +16,16 @@ class Request
         return $this->request['request']['url'];
     }
 
+    public function method(): string
+    {
+        return $this->request['request']['method'];
+    }
+
+    public function status(): string
+    {
+        return $this->request['response']['status'];
+    }
+
     public function time(int $precision = 2): float
     {
         return round($this->request['time'], $precision);

@@ -9,7 +9,7 @@ beforeEach(function () {
     );
 });
 
-test('count total requests', function () {
+test('total requests', function () {
     expect($this->har->totalRequests())->toEqual(99);
 });
 
@@ -57,13 +57,13 @@ test('total uncompressed size', function () {
     expect($this->har->totalUncompressedSize())->toEqual(4896355);
 });
 
-test('get onContentLoad timing', function () {
+test('onContentLoad timing', function () {
     expect($this->har->onContentLoadTiming())->toEqual(580.40)
         ->and($this->har->onContentLoadTiming(0))->toEqual(580)
         ->and($this->har->onContentLoadTiming(3))->toEqual(580.401);
 });
 
-test('get onLoad timing', function () {
+test('onLoad timing', function () {
     expect($this->har->onLoadTiming())->toEqual(775.93)
         ->and($this->har->onLoadTiming(0))->toEqual(776)
         ->and($this->har->onLoadTiming(3))->toEqual(775.926);
