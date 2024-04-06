@@ -26,9 +26,7 @@ class Har
     public function requests(): Collection
     {
         if (empty($this->requests)) {
-            $this->requests = (new Collection($this->har['log']['entries']))->map(function ($entry) {
-                return new Request($entry);
-            });
+            $this->requests = (new Collection($this->har['log']['entries']))->mapInto(Request::class);
         }
 
         return $this->requests;

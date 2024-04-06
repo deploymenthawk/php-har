@@ -20,6 +20,18 @@ test('request status', function () {
     expect($this->request->status())->toEqual(200);
 });
 
+test('request type', function () {
+    expect($this->request->type())->toEqual('document');
+});
+
+test('request priority', function () {
+    expect($this->request->priority())->toEqual('VeryHigh');
+});
+
+test('request IP address', function () {
+    expect($this->request->ipAddress())->toEqual('140.82.121.4');
+});
+
 test('request time', function () {
     expect($this->request->time())->toEqual(266.54)
         ->and($this->request->time(0))->toEqual(267)

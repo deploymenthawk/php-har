@@ -26,6 +26,21 @@ class Request
         return $this->request['response']['status'];
     }
 
+    public function type(): string
+    {
+        return $this->request['_resourceType'];
+    }
+
+    public function priority(): string
+    {
+        return $this->request['_priority'];
+    }
+
+    public function ipAddress(): string
+    {
+        return $this->request['serverIPAddress'];
+    }
+
     public function time(int $precision = 2): float
     {
         return round($this->request['time'], $precision);
