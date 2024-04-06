@@ -99,3 +99,19 @@ test('request receive timing', function () {
         ->and($this->request->receiveTiming(0))->toEqual(47)
         ->and($this->request->receiveTiming(3))->toEqual(46.900);
 });
+
+test('request headers', function () {
+    expect($this->request->requestHeaders())->toBeArray()
+        ->and($this->request->requestHeaders()[0])->toMatchArray([
+            'name' => ':authority',
+            'value' => 'github.com',
+        ]);
+});
+
+test('request response headers', function () {
+    expect($this->request->responseHeaders())->toBeArray()
+        ->and($this->request->responseHeaders()[0])->toMatchArray([
+            'name' => 'accept-ranges',
+            'value' => 'bytes',
+        ]);
+});

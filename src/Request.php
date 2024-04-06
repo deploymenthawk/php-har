@@ -111,4 +111,14 @@ class Request
     {
         return round($this->request['timings']['receive'], $precision);
     }
+
+    public function requestHeaders(): array
+    {
+        return $this->request['request']['headers'];
+    }
+
+    public function responseHeaders(): array
+    {
+        return $this->request['response']['headers'];
+    }
 }
