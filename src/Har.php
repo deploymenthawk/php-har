@@ -41,111 +41,109 @@ class Har
     {
         if (is_null($type)) {
             return $this->requests()
-                ->groupBy(fn ($request) => $request->type())
-                ->map(fn ($group) => $group->count())
+                ->groupBy(fn (Request $request) => $request->type())
+                ->map(fn (Collection $group) => $group->count())
                 ->toArray();
         }
 
         return $this->requests()
-            ->filter(fn ($request) => $request->type() === $type)
+            ->filter(fn (Request $request) => $request->type() === $type)
             ->count();
     }
 
     public function slowestRequest(): Request
     {
-        return $this->requests()->sortBy(function (Request $request) {
-            return $request->time();
-        })->last();
+        return $this->requests()
+            ->sortBy(fn (Request $request) => $request->time())
+            ->last();
     }
 
     public function fastestRequest(): Request
     {
-        return $this->requests()->sortBy(function (Request $request) {
-            return $request->time();
-        })->first();
+        return $this->requests()
+            ->sortBy(fn (Request $request) => $request->time())
+            ->first();
     }
 
     public function largestRequest(): Request
     {
-        return $this->requests()->sortBy(function (Request $request) {
-            return $request->size();
-        })->last();
+        return $this->requests()
+            ->sortBy(fn (Request $request) => $request->size())
+            ->last();
     }
 
     public function smallestRequest(): Request
     {
-        return $this->requests()->sortBy(function (Request $request) {
-            return $request->size();
-        })->first();
+        return $this->requests()
+            ->sortBy(fn (Request $request) => $request->size())
+            ->first();
     }
 
     public function largestUncompressedRequest(): Request
     {
-        return $this->requests()->sortBy(function (Request $request) {
-            return $request->uncompressedSize();
-        })->last();
+        return $this->requests()
+            ->sortBy(fn (Request $request) => $request->uncompressedSize())
+            ->last();
     }
 
     public function smallestUncompressedRequest(): Request
     {
-        return $this->requests()->sortBy(function (Request $request) {
-            return $request->uncompressedSize();
-        })->first();
+        return $this->requests()
+            ->sortBy(fn (Request $request) => $request->uncompressedSize())
+            ->first();
     }
 
     public function totalSize(): int
     {
-        return $this->requests()->sum(function (Request $request) {
-            return $request->size();
-        });
+        return $this->requests()
+            ->sum(fn (Request $request) => $request->size());
     }
 
     public function totalSizeByType(?string $type = null): array|int
     {
-        if (is_null($type)) {
-            return $this->requests()
+        return is_null($type)
+            ? $this->requests()
                 ->groupBy(fn (Request $request) => $request->type())
                 ->map(fn (Collection $group) => $group->sum(fn (Request $request) => $request->size()))
-                ->toArray();
-        }
-
-        return $this->requests()
-            ->filter(fn (Request $request) => $request->type() === $type)
-            ->sum(fn (Request $request) => $request->size());
+                ->toArray()
+            : $this->requests()
+                ->filter(fn (Request $request) => $request->type() === $type)
+                ->sum(fn (Request $request) => $request->size());
     }
 
     public function totalUncompressedSize(): int
     {
-        return $this->requests()->sum(function (Request $request) {
-            return $request->uncompressedSize();
-        });
+        return $this->requests()
+            ->sum(fn (Request $request) => $request->uncompressedSize());
     }
 
     public function totalUncompressedSizeByType(?string $type = null): array|int
     {
-        if (is_null($type)) {
-            return $this->requests()
+        return is_null($type)
+            ? $this->requests()
                 ->groupBy(fn (Request $request) => $request->type())
                 ->map(fn (Collection $group) => $group->sum(fn (Request $request) => $request->uncompressedSize()))
-                ->toArray();
-        }
-
-        return $this->requests()
-            ->filter(fn (Request $request) => $request->type() === $type)
-            ->sum(fn (Request $request) => $request->uncompressedSize());
+                ->toArray()
+            : $this->requests()
+                ->filter(fn (Request $request) => $request->type() === $type)
+                ->sum(fn (Request $request) => $request->uncompressedSize());
     }
 
     public function onContentLoadTiming(int $precision = 2): ?float
     {
-        return empty($this->har['log']['pages'][0]['pageTimings']['onContentLoad'])
+        $contentLoadTiming = $this->har['log']['pages'][0]['pageTimings']['onContentLoad'] ?? null;
+
+        return is_null($contentLoadTiming) || $contentLoadTiming === -1
             ? null
-            : round($this->har['log']['pages'][0]['pageTimings']['onContentLoad'], $precision);
+            : round($contentLoadTiming, $precision);
     }
 
     public function onLoadTiming(int $precision = 2): ?float
     {
-        return empty($this->har['log']['pages'][0]['pageTimings']['onLoad'])
+        $loadTiming = $this->har['log']['pages'][0]['pageTimings']['onLoad'] ?? null;
+
+        return is_null($loadTiming) || $loadTiming === -1
             ? null
-            : round($this->har['log']['pages'][0]['pageTimings']['onLoad'], $precision);
+            : round($loadTiming, $precision);
     }
 }
