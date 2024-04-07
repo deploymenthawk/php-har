@@ -69,8 +69,38 @@ test('total size', function () {
     expect($this->har->totalSize())->toEqual(1600544);
 });
 
+test('total size by type', function () {
+    expect($this->har->totalSizeByType('script'))->toEqual(850740)
+        ->and($this->har->totalSizeByType())->toBeArray()->toMatchArray([
+            'document' => 45771,
+            'stylesheet' => 149883,
+            'script' => 850740,
+            'font' => 84609,
+            'image' => 449139,
+            'fetch' => 12989,
+            'xhr' => 4497,
+            'ping' => 915,
+            'other' => 2001,
+        ]);
+});
+
 test('total uncompressed size', function () {
     expect($this->har->totalUncompressedSize())->toEqual(4896355);
+});
+
+test('total uncompressed size by type', function () {
+    expect($this->har->totalUncompressedSizeByType('script'))->toEqual(3007450)
+        ->and($this->har->totalUncompressedSizeByType())->toBeArray()->toMatchArray([
+            'document' => 223478,
+            'stylesheet' => 1092644,
+            'script' => 3007450,
+            'font' => 84388,
+            'image' => 446352,
+            'fetch' => 36174,
+            'xhr' => 4328,
+            'ping' => 0,
+            'other' => 1541,
+        ]);
 });
 
 test('onContentLoad timing', function () {

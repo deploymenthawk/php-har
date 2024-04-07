@@ -100,11 +100,39 @@ class Har
         });
     }
 
+    public function totalSizeByType(?string $type = null): array|int
+    {
+        if (is_null($type)) {
+            return $this->requests()
+                ->groupBy(fn (Request $request) => $request->type())
+                ->map(fn (Collection $group) => $group->sum(fn (Request $request) => $request->size()))
+                ->toArray();
+        }
+
+        return $this->requests()
+            ->filter(fn (Request $request) => $request->type() === $type)
+            ->sum(fn (Request $request) => $request->size());
+    }
+
     public function totalUncompressedSize(): int
     {
         return $this->requests()->sum(function (Request $request) {
             return $request->uncompressedSize();
         });
+    }
+
+    public function totalUncompressedSizeByType(?string $type = null): array|int
+    {
+        if (is_null($type)) {
+            return $this->requests()
+                ->groupBy(fn (Request $request) => $request->type())
+                ->map(fn (Collection $group) => $group->sum(fn (Request $request) => $request->uncompressedSize()))
+                ->toArray();
+        }
+
+        return $this->requests()
+            ->filter(fn (Request $request) => $request->type() === $type)
+            ->sum(fn (Request $request) => $request->uncompressedSize());
     }
 
     public function onContentLoadTiming(int $precision = 2): ?float
