@@ -60,6 +60,38 @@ $har->requests()->each(function(\DeploymentHawk\Request $request) {
 })
 ```
 
+#### `fastestRequest()`
+
+Return the fastest network request:
+
+```php
+$har->fastestRequest(); // \DeploymentHawk\Request
+```
+
+#### `slowestRequest()`
+
+Return the slowest network request:
+
+```php
+$har->slowestRequest(); // \DeploymentHawk\Request
+```
+
+#### `largestRequest()`
+
+Return the largest network request:
+
+```php
+$har->largestRequest(); // \DeploymentHawk\Request
+```
+
+#### `smallestRequest()`
+
+Return the smallest network request:
+
+```php
+$har->smallestRequest(); // \DeploymentHawk\Request
+```
+
 ### Page Weight
 
 #### `totalSize()`
