@@ -33,6 +33,51 @@ Return the total number of network requests:
 $har->totalRequests(); // 99
 ```
 
+#### `requests()`
+
+Return a `Collection` of network requests:
+
+```php
+$har->requests()->each(function(\DeploymentHawk\Request $request) {
+    $request->url(); // https://github.com/
+    $request->method(); // GET
+    $request->status(); // 200
+    $request->type(); // document
+    $request->priority(); // VeryHigh
+    $request->ipAddress(); // 140.82.121.4
+    $request->time(); // 266.54
+    $request->size(); // 45771
+    $request->uncompressedSize(); // 223478
+    $request->blockedTiming(); // 140.56
+    $request->dnsTiming(); // 0.01
+    $request->connectTiming(); // 52.07
+    $request->sslTiming(); // 28.38
+    $request->sendTiming(); // 0.25
+    $request->waitTiming(); // 26.75
+    $request->receiveTiming(); // 46.90
+    $request->requestHeaders() // [name => value, ...]
+    $request->responseHeaders() // [name => value, ...]
+})
+```
+
+### Page Weight
+
+#### `totalSize()`
+
+Return the total number of bytes transferred for all network requests:
+
+```php
+$har->totalSize(); // 1600544
+```
+
+#### `totalUncompressedSize()`
+
+Return the total number of bytes for all resources:
+
+```php
+$har->totalUncompressedSize(); // 4896355
+```
+
 ### Timings
 
 #### `onContentLoadTiming()`
