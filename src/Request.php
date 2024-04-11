@@ -2,6 +2,8 @@
 
 namespace DeploymentHawk;
 
+use Illuminate\Support\Collection;
+
 class Request
 {
     protected array $request;
@@ -65,7 +67,8 @@ class Request
             'connect' => $this->connectTiming($precision),
             'send' => $this->sendTiming($precision),
             'wait' => $this->waitTiming($precision),
-            'receive' => $this->sendTiming($precision),
+            'receive' => $this->receiveTiming($precision),
+            'ttfb' => $this->ttfbTiming($precision),
         ];
     }
 
@@ -110,6 +113,18 @@ class Request
     public function receiveTiming(int $precision = 2): float
     {
         return round($this->request['timings']['receive'], $precision);
+    }
+
+    public function ttfbTiming(int $precision = 2): float
+    {
+        $ttfb = (new Collection([
+            $this->dnsTiming($precision),
+            $this->connectTiming($precision),
+            $this->sendTiming($precision),
+            $this->waitTiming($precision),
+        ]))->filter()->sum();
+
+        return round($ttfb, $precision);
     }
 
     public function requestHeaders(): array

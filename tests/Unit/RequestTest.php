@@ -54,7 +54,8 @@ test('request timings', function () {
         'connect' => 52.07,
         'send' => 0.25,
         'wait' => 26.75,
-        'receive' => 0.25,
+        'receive' => 46.90,
+        'ttfb' => 79.08,
     ]);
 });
 
@@ -98,6 +99,12 @@ test('request receive timing', function () {
     expect($this->request->receiveTiming())->toEqual(46.90)
         ->and($this->request->receiveTiming(0))->toEqual(47)
         ->and($this->request->receiveTiming(3))->toEqual(46.900);
+});
+
+test('request ttfb timing', function () {
+    expect($this->request->ttfbTiming())->toEqual(79.08)
+        ->and($this->request->ttfbTiming(0))->toEqual(79)
+        ->and($this->request->ttfbTiming(3))->toEqual(79.075);
 });
 
 test('request headers', function () {
