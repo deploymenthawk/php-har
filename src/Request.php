@@ -50,12 +50,12 @@ class Request
 
     public function size(): int
     {
-        return $this->request['response']['_transferSize'];
+        return $this->request['response']['_transferSize'] ?? 0;
     }
 
     public function uncompressedSize(): int
     {
-        return $this->request['response']['content']['size'];
+        return $this->request['response']['content']['size'] ?? 0;
     }
 
     public function timings(int $precision = 2): array
